@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'https' do |ss|
     ss.source_files      = '**/FFmpegKitReactNativeModule.{m,h}'
-    ss.dependency 'mysrapp-ffmpeg-kit-ios-video', "6.0.3"
+    ss.dependency 'mysrapp-ffmpeg-kit-ios-https', "6.0.3"
     ss.ios.deployment_target = '12.1'
   end
 end
