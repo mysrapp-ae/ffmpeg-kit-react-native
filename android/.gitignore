@@ -1,0 +1,9 @@
+# Downloaded AAR files (will be downloaded during build)
+libs/
+
+# Build directories
+build/
+.gradle/
+
+# Local configuration
+local.properties
