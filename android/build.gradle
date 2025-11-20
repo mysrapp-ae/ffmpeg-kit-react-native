@@ -53,9 +53,38 @@ android {
   }
 }
 
+// Task to download FFmpeg Kit AAR from GitHub releases
+task downloadFFmpegKit {
+  def aarFileName = 'ffmpeg-kit-https-6.0.2.aar'
+  def aarUrl = 'https://github.com/mysrapp-ae/ffmpeg-kit/releases/download/v6.0.2-android/ffmpeg-kit-https-6.0.2.aar'
+  def libsDir = new File(projectDir, 'libs')
+  def aarFile = new File(libsDir, aarFileName)
+
+  doLast {
+    if (!aarFile.exists()) {
+      libsDir.mkdirs()
+      println "Downloading FFmpeg Kit AAR from GitHub..."
+      new URL(aarUrl).withInputStream { i ->
+        aarFile.withOutputStream { it << i }
+      }
+      println "FFmpeg Kit AAR downloaded successfully!"
+    } else {
+      println "FFmpeg Kit AAR already exists, skipping download."
+    }
+  }
+}
+
+// Run download task before preBuild
+preBuild.dependsOn downloadFFmpegKit
+
 repositories {
   mavenCentral()
   google()
+
+  // Local AAR repository
+  flatDir {
+    dirs 'libs'
+  }
 
   def found = false
   def defaultDir = null
@@ -125,5 +154,6 @@ repositories {
 
 dependencies {
   api 'com.facebook.react:react-native:+'
-  implementation 'com.arthenica:ffmpeg-kit-' + safePackageName(safeExtGet('ffmpegKitPackage', 'https')) + ':' + safePackageVersion(safeExtGet('ffmpegKitPackage', 'https'))
+  // Use locally downloaded AAR from GitHub releases instead of Maven Central
+  implementation(name: 'ffmpeg-kit-https-6.0.2', ext: 'aar')
 }
