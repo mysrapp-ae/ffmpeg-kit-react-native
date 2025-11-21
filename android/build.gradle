@@ -57,9 +57,12 @@ repositories {
   mavenCentral()
   google()
 
-  // Local AAR repository (AAR file is committed in android/libs/)
-  flatDir {
-    dirs 'libs'
+  // Custom Maven repository hosted on GitHub (mirrors iOS Podspec approach)
+  maven {
+    url 'https://raw.githubusercontent.com/mysrapp-ae/ffmpeg-kit/main/maven'
+    content {
+      includeGroup 'com.arthenica'
+    }
   }
 
   def found = false
@@ -130,6 +133,6 @@ repositories {
 
 dependencies {
   api 'com.facebook.react:react-native:+'
-  // Use locally committed AAR (from GitHub releases) instead of Maven Central
-  implementation(name: 'ffmpeg-kit-https-6.0.2', ext: 'aar')
+  // Use GitHub-hosted Maven repository (mirrors iOS Podspec approach)
+  implementation 'com.arthenica:ffmpeg-kit-https:6.0.2'
 }

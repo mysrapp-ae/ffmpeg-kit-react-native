@@ -5,4 +5,4 @@ build/
 # Local configuration
 local.properties
 
-# Note: libs/ is NOT ignored - we commit the AAR file for EAS builds
+# Note: libs/ not needed - using GitHub Maven repository instead
