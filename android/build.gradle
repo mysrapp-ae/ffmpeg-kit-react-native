@@ -61,8 +61,8 @@ repositories {
   maven {
     url 'https://raw.githubusercontent.com/mysrapp-ae/ffmpeg-kit/main/maven'
     content {
-      includeGroup 'com.arthenica'
-    }
+      includeModule 'com.arthenica', 'ffmpeg-kit-https'
+  }
   }
 
   def found = false
@@ -136,4 +136,5 @@ dependencies {
   // Use GitHub-hosted Maven repository (mirrors iOS Podspec approach)
   implementation 'com.arthenica:ffmpeg-kit-https:6.0.2'
   implementation 'com.arthenica:smart-exception-java:0.2.1'
+  implementation 'com.arthenica:smart-exception-common:0.2.1'
 }
