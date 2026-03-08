@@ -135,4 +135,5 @@ dependencies {
   api 'com.facebook.react:react-native:+'
   // Use GitHub-hosted Maven repository (mirrors iOS Podspec approach)
   implementation 'com.arthenica:ffmpeg-kit-https:6.0.2'
+  implementation 'com.arthenica:smart-exception-java:0.2.1'
 }
