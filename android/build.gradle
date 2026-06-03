@@ -59,7 +59,7 @@ repositories {
 
   // Custom Maven repository hosted on GitHub (mirrors iOS Podspec approach)
   maven {
-    url 'https://raw.githubusercontent.com/mysrapp-ae/ffmpeg-kit/main/maven'
+    url 'https://raw.githubusercontent.com/MySRApp-SA/ffmpeg-kit/main/maven'
     content {
       includeModule 'com.arthenica', 'ffmpeg-kit-https'
   }

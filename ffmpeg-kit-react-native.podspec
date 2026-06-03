@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.requires_arc      = true
   s.static_framework  = true
 
-  s.source       = { :git => "https://github.com/mysrapp-ae/ffmpeg-kit-react-native.git", :tag => "react.native.v#{s.version}-mysrapp" }
+  s.source       = { :git => "https://github.com/MySRApp-SA/ffmpeg-kit-react-native.git", :tag => "react.native.v#{s.version}-mysrapp" }
 
   s.default_subspec   = 'https'
 
