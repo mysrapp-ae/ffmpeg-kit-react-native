@@ -25,7 +25,11 @@ import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class WriteToPipeTask implements Runnable {
   private final String inputPath;
@@ -40,24 +44,25 @@ public class WriteToPipeTask implements Runnable {
 
   @Override
   public void run() {
-    int rc;
+    Log.d(LIBRARY_NAME, String.format("Starting copy %s to pipe %s operation.", inputPath, namedPipePath));
+    final long startTime = System.currentTimeMillis();
 
-    try {
-      final String asyncCommand = "cat " + inputPath + " > " + namedPipePath;
-      Log.d(LIBRARY_NAME, String.format("Starting copy %s to pipe %s operation.", inputPath, namedPipePath));
-
-      final long startTime = System.currentTimeMillis();
-
-      final Process process = Runtime.getRuntime().exec(new String[]{"sh", "-c", asyncCommand});
-      rc = process.waitFor();
+    // SRP-1 (CWE-78): stream-copy, never `sh -c "cat ... > ..."` — paths as file
+    // args can't inject shell metacharacters.
+    try (final InputStream in = new FileInputStream(inputPath);
+         final OutputStream out = new FileOutputStream(namedPipePath)) {
+      final byte[] buffer = new byte[8192];
+      int bytesRead;
+      while ((bytesRead = in.read(buffer)) != -1) {
+        out.write(buffer, 0, bytesRead);
+      }
+      out.flush();
 
       final long endTime = System.currentTimeMillis();
+      Log.d(LIBRARY_NAME, String.format("Copying %s to pipe %s operation completed with rc 0 in %d seconds.", inputPath, namedPipePath, (endTime - startTime) / 1000));
+      promise.resolve(0);
 
-      Log.d(LIBRARY_NAME, String.format("Copying %s to pipe %s operation completed with rc %d in %d seconds.", inputPath, namedPipePath, rc, (endTime - startTime) / 1000));
-
-      promise.resolve(rc);
-
-    } catch (final IOException | InterruptedException e) {
+    } catch (final IOException e) {
       Log.e(LIBRARY_NAME, String.format("Copy %s to pipe %s failed with error.", inputPath, namedPipePath), e);
       promise.reject("Copy failed", String.format("Copy %s to pipe %s failed with error.", inputPath, namedPipePath), e);
     }
