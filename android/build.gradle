@@ -61,7 +61,7 @@ repositories {
   maven {
     url 'https://raw.githubusercontent.com/MySRApp-SA/ffmpeg-kit/main/maven'
     content {
-      includeModule 'com.arthenica', 'ffmpeg-kit-https'
+      includeModule 'com.arthenica', 'ffmpeg-kit-min'
   }
   }
 
@@ -134,7 +134,7 @@ repositories {
 dependencies {
   api 'com.facebook.react:react-native:+'
   // Use GitHub-hosted Maven repository (mirrors iOS Podspec approach)
-  implementation 'com.arthenica:ffmpeg-kit-https:6.0.2'
+  implementation 'com.arthenica:ffmpeg-kit-min:6.0.3'
   implementation 'com.arthenica:smart-exception-java:0.2.1'
   implementation 'com.arthenica:smart-exception-common:0.2.1'
 }
